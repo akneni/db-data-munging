@@ -7,11 +7,17 @@ with open("./data/raw_data.txt", 'r') as f:
 # Each relevent row starts with a year, so we'll 
 # split the stata by '\n' and only use rows that start with 4 numbers
 data = data.split("\n")
+include_heading = True
 lst = []
 for line in data:
     line = line.strip()
+
+    # Only add the relevent lines
     if (line == "") or (not line[:4].isdigit()):
-        continue
+        if (line[:4] == 'Year') and include_heading:
+            include_heading = False
+        else:
+            continue
 
     # Replace all whitespace with a single space
     while ('  ' in line):
