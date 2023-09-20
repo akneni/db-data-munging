@@ -24,19 +24,28 @@ decade_means = {
     '2010': [0, 0],
     '2020': [0, 0]
 }
+months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
 # Sum up the total for each decade
 for year in data:
     # Replace the last digit of the year with zero
     decade = year['Year'][:-1] + "0"
 
-    decade_means[decade][0] += int(year['J-D'])
+    yearly_total = [0, 0] # [running total, number of entries]
+
+    # average all months since some years may have "NaN" in the "J-D" column
+    for month in months:
+        if year[month] != "NaN":
+            yearly_total[0] += float(year[month])
+            yearly_total[1] += 1
+
+    decade_means[decade][0] += yearly_total[0] / yearly_total[1]
     decade_means[decade][1] += 1
 
 # Output the data to the console in a human readable format
 for k, v in decade_means.items():
     mean = v[0] / v[1]
-    print(f"{k}-{int(k)+v[1]-1}:  {mean}")
+    print(f"{k}-{int(k)+v[1]-1}:  {mean:.4f}")
 
 
 

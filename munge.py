@@ -28,12 +28,22 @@ for line in data:
 
 
 # Now, we need to deal with missing values that are denoted by '*'
-# We will fill them in with a zero for now
+# We will fill them with "NaN" for now and then ignore them when analyzing data
 
 for sublst in lst:
     for i, elem in enumerate(sublst):
         if '*' in elem:
-            sublst[i] = '0'
+            sublst[i] = 'NaN'
+
+
+# Covert Centicelcius into farenheight
+for i in range(1, len(lst)): # skip the header row
+    sublist = lst[i]
+
+    for j in range (1, len(sublist)-1): # Skip the two year columns
+        if sublist[j] != 'NaN':
+            sublist[j] = round(((float(sublist[j]) / 100) * 1.8), 1) # convert units
+            sublist[j] = str(sublist[j]) # turn it back into a string for the .join() method
 
 
 
