@@ -1,5 +1,5 @@
 import csv
- 
+
 # Grab data from csv file
 with open('./data/clean_data.csv', 'r') as f:
     data = list(csv.DictReader(f))
